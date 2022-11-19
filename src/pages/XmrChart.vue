@@ -343,6 +343,7 @@ export default {
     },
 
     setStatisticsData() {
+      console.log(this.statisticsData)
       this.statisticsData = [
         {
           key: "Data Count",
@@ -408,9 +409,15 @@ export default {
 
       if (cb) cb();
     },
-
+    //fix the broken lines on chart
     setChartData() {
       this.formattedDataList = this.dataList.map((obj) => {
+        console.log(obj)
+        if(obj.value===null){
+          console.log("null")
+          return;
+          obj.value=0;
+        }
         return {
           key: obj.id + "",
           label: obj.label,

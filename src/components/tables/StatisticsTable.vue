@@ -112,6 +112,9 @@
 </template>
 
 <script>
+import { xBarRChartDataApi, xmrChartDataApi } from "../../api";
+import XBarRDataExcel from "./XBarRDataExcel.vue"
+
 export default {
   name: "StatisticsTable",
 
@@ -191,16 +194,43 @@ export default {
     }
   },
 
+  //Ranga chart properties check boxes loading
   created() {
-    this.centerLines = this.displayCenterLines;
-    this.controlLimits = this.displayControlLimits;
-    this.cpk = this.displayCPK;
-    this.cp = this.displayCP;
-    this.ppk = this.displayPPK;
-    this.pp = this.displayPP;
+    let pathname = window.location.pathname;
+      pathname = pathname.split("/");
+      this.chartId = pathname[pathname.length - 1] || "";
+
+      xmrChartDataApi
+        .getProperties(this.chartId, "")
+        .then((res) => {
+          if (res && res.data && res.data.data) {
+            if(res.data.data[0].displayCenterLine===0){
+              this.centerLines= false;
+            }
+            if(res.data.data[0].displayControlLimits===0){
+              this.controlLimits = false;
+            }
+            if(res.data.data[0].displayCpk===0){
+              this.cpk = false;
+            }
+            if(res.data.data[0].displayCp===0){
+              this.cp = false;
+            }
+            if(res.data.data[0].displayPpk===0){
+              this.ppk = false;
+            }
+            if(res.data.data[0].displayPp===0){
+              this.pp = false;
+            }
+          }
+        })
+        .catch((err) => {
+          console.error("Unable to get all data :: ", err);
+        });
   },
 
   methods: {
+
     upperLimitChanged(value) {
       this.$emit("specLimitChanged", {
         key: "upper",
@@ -218,15 +248,28 @@ export default {
     saveLimits() {
       this.$emit("saveLimits");
     },
-
+    
+    //Ranga Save Properts check boxes
     handleLinesDisplayChange() {
+      let pathname = window.location.pathname;
+      pathname = pathname.split("/");
+      this.chartId = pathname[pathname.length - 1] || "";
+
+
+      xmrChartDataApi.updateProperties(this.chartId,this.centerLines,this.controlLimits,this.centerLines,this.cpk,this.ppk,this.cp,this.pp);
+  
       this.$emit("updateChartLinesDisplay", {
         displayControlLimits: this.controlLimits,
         displayCenterLines: this.centerLines
       });
     },
-
+    //Ranga Save Properts check boxes
     handleRatioLinesDisplayChange() {
+      let pathname = window.location.pathname;
+      pathname = pathname.split("/");
+      this.chartId = pathname[pathname.length - 1] || "";
+      xmrChartDataApi.updateProperties(this.chartId,this.centerLines,this.controlLimits,this.centerLines,this.cpk,this.ppk,this.cp,this.pp);
+     
       this.$emit("updateRatioLinesDisplay", {
         displayCPK: this.cpk,
         displayCP: this.cp,

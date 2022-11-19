@@ -406,7 +406,7 @@ export default {
 
     setChartData() {
       this.formattedAverages = this.dataList.map((obj) => {
-        return {
+              return {
           key: obj.id + "",
           label: obj.reference1,
           note: obj.note,

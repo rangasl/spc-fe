@@ -2,6 +2,7 @@ import util from "../../utils";
 import { xmrChartDataApi } from "../../api";
 import constants from "../../utils/constants.util";
 import storageHelper from "../../utils/storageHelper.util";
+import { current } from "jexcel";
 
 const LOCK_LIMIT_KEY = constants.INDIVIDUALS_CHART_LOCK_LIMIT_KEY;
 
@@ -232,9 +233,16 @@ const xmrChartDataModule = {
       let cp = 0;
       let pp = 0;
 
+      //Ranga Prev value call point
       list = list.map((obj, i) => {
         prev = curr;
         curr = obj.value;
+        if (obj.value===null){
+          console.log("tracked")
+          curr=prev;
+          console.log(curr)
+        }
+        
         movingRange = util.getMovingRangeForXMR(prev, curr, i);
         valuesSum += obj.value;
         cumulativeAverage = util.getCumulativeAverage(valuesSum, i + 1);
@@ -439,10 +447,10 @@ const xmrChartDataModule = {
       }
     },
 
-    updateDataItems: (ctx, { chartId, password, dataObjectList }) => {
+    updateDataItems: (ctx, { chartId, password, dataObjectList,displayControlLimits,displayCenterLine,displayCpk,displayPpk,displayCp,displayPp }) => {
       ctx.commit("loading", true);
       xmrChartDataApi
-        .updateMany(chartId, password, dataObjectList)
+        .updateMany(chartId, password, dataObjectList,displayControlLimits,displayCenterLine,displayCpk,displayPpk,displayCp,displayPp)
         .then(() => {
           ctx.dispatch("init", { chartId, password });
         })

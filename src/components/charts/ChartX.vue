@@ -83,7 +83,6 @@ export default {
       default: () => ["line"]
     }
   },
-
   data() {
     return {
       colors,

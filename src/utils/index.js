@@ -184,11 +184,16 @@ function getNumValOrStr(val) {
   if ((!val && val !== 0) || isNaN(val)) return "";
   return Number.parseFloat(val);
 }
-
+var onePreVal;
+//Ranga moving range calculation return point
 function getMovingRangeForXMR(prevVal, currVal, index) {
   if (index === 0) return "";
+  onePreVal = prevVal;
   prevVal = getNumValOrStr(prevVal);
   currVal = getNumValOrStr(currVal);
+  if(prevVal/10 ==='null'){
+    console.log("10000")
+  }
   if (typeof prevVal !== "number" || typeof currVal !== "number") return "";
   return Math.abs(currVal - prevVal);
 }

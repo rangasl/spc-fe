@@ -475,7 +475,8 @@ export default {
           value: currentVal ? Number.parseInt(rowIndex) : "NONE",
           chartId: this.chartId
         });
-      } else if (currentVal === "") this.handleChange();
+      // } else if (currentVal === "") this.handleChange(); this is intial version - prevent merge when delete
+    } else if (currentVal === "") return; 
     },
 
     downloadData() {

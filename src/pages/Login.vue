@@ -1,8 +1,17 @@
 <template>
+  
   <div class="centered-container">
-    <md-content class="md-elevation-3">
-      <div class="title">
-        <div class="md-title">Log in</div>
+
+    <div class="div1">
+      <img style='width: 82%;' src="./spclogin.png">
+    </div>
+
+    <div class="div2">
+      
+      <md-content class="md-elevation-3">
+      
+      <div class="title" >
+        <div class="md-title" style="padding: 12px; color: #448aff;">Log in</div>
         <div class="md-body-1">Enter your email and password</div>
       </div>
 
@@ -38,23 +47,14 @@
         ></md-progress-spinner>
       </div>
     </md-content>
-    <div class="background" />
+  </div>
 
-    <md-snackbar
-      :md-position="position"
-      :md-duration="duration"
-      :md-active.sync="showSnackbar"
-      md-persistent
-    >
-      <span>{{ errorMsg }}</span>
-      <md-button class="md-primary" @click="showSnackbar = false">
-        Close
-      </md-button>
-    </md-snackbar>
+   
   </div>
 </template>
-
+  
 <script>
+  
 import storageHelper from "../utils/storageHelper.util";
 import { userApi } from "../api";
 
@@ -128,12 +128,25 @@ export default {
 </script>
 
 <style scoped>
+.div1 {
+  width: 60%;
+  height: 120px;
+  text-align: right;
+  /* border: 1px solid blue; */
+}
+
+.div2 {
+  width: 28%;
+  height: 100px;  
+  align-items: left;
+  /* border: 1px solid red; */
+}
 .centered-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
   position: relative;
   height: 100vh;
+  padding-right: 10%;
+  padding-top: 10%;
 }
 .centered-container .title {
   text-align: center;
@@ -159,6 +172,13 @@ export default {
   right: 0;
   left: 0;
   z-index: 0;
+}
+.centered-container .md-content-trasparent {
+  background-color: rgba(255, 255, 255, 1);
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+  position: relative;
 }
 .centered-container .md-content {
   z-index: 1;
