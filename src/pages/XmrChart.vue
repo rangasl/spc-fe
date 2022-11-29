@@ -343,7 +343,7 @@ export default {
     },
 
     setStatisticsData() {
-      console.log(this.statisticsData)
+      // console.log(this.statisticsData)
       this.statisticsData = [
         {
           key: "Data Count",
@@ -409,10 +409,9 @@ export default {
 
       if (cb) cb();
     },
-    //fix the broken lines on chart
+    //Ranga fix the broken lines on chart
     setChartData() {
       this.formattedDataList = this.dataList.map((obj) => {
-        console.log(obj)
         if(obj.value===null){
           console.log("null")
           return;
@@ -547,6 +546,7 @@ export default {
     saveDashboardHeadings(newObj) {
       const defaultHeadings = constants.INDIVIDUALS_CHART_DEFAULT_HEADINGS;
       const newHeading = {};
+      
       for (const key in newObj) {
         let value = newObj[key];
         if (!value) value = defaultHeadings[key];

@@ -1,60 +1,54 @@
+
 <template>
-  
-  <div class="centered-container">
+<div>
 
-    <div class="div1">
-      <img style='width: 82%;' src="./spclogin.png">
-    </div>
+ <div class="mainSection" align="left">
 
-    <div class="div2">
-      
-      <md-content class="md-elevation-3">
-      
-      <div class="title" >
-        <div class="md-title" style="padding: 12px; color: #448aff;">Log in</div>
-        <div class="md-body-1">Enter your email and password</div>
-      </div>
+<img class="spchart" src="../assets/spcchart.png">
+</div>
+<div class="menu" align="left">
+    <a class="signAnchor" href="#">Sign In</a> | <a class="support" href="#">Contact Sopport</a> |
+    <a class="knowladge" href="#">Knowledgebase</a>
+</div>
+<img class="laptop" src="../assets/computer.png">
+        <div class="loginSection">
 
-      <div class="form">
-        <md-field>
-          <label>E-mail</label>
-          <md-input v-model="login.email" autofocus id="email"></md-input>
-        </md-field>
+            <h1 class="sign">SIGN IN</h1>
 
-        <md-field md-has-password>
-          <label>Password</label>
-          <md-input
-            v-model="login.password"
+            
+            <form>
+
+<p style="padding-top: 12px;" align="left">User Name</p>
+<input v-model="login.email" type="text" name="">
+
+<p align="left">Password</p>
+<input  v-model="login.password"
             type="password"
-            id="password"
-          ></md-input>
-        </md-field>
-      </div>
+            id="password" name=""><br><br>
 
-      <div class="actions md-layout md-alignment-center-space-between">
-        <md-button class="md-raised md-primary" @click="navigateToRegister">
-          Sign up
-        </md-button>
-        <md-button class="md-raised md-primary" @click="signIn"
-          >Log in</md-button
+
+            <input type="button" @click="signIn" name="" value="Login"><br>
+
         >
-      </div>
+<h5>OR</h5><br><br />
 
-      <div class="loading-overlay" v-if="loading">
-        <md-progress-spinner
-          md-mode="indeterminate"
-          :md-stroke="2"
-        ></md-progress-spinner>
-      </div>
-    </md-content>
-  </div>
+<button class="google" @onclick="signIn">Sign Up</button>
 
-   
-  </div>
+
+<p>By sign up, you agree to our communications and usage terms.<br>
+    <br>
+    <!-- <button class="fogetpw">Forgot Password</button> -->
+
+</p>
+
+</form>
+        </div>
+</div>
+
 </template>
   
 <script>
-  
+
 import storageHelper from "../utils/storageHelper.util";
 import { userApi } from "../api";
 
@@ -199,5 +193,258 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.sign {
+    margin: 10px;
+    padding: 0 0 2;
+    text-align: center;
+}
+
+.paragraph {
+    margin-left: 38px;
+}
+
+h5 {
+    max-width: 500px;
+    text-align: center;
+    margin: auto;
+    position: relative;
+}
+
+h5:before {
+    content: "";
+    width: 140px;
+    height: 1px;
+    display: block;
+    background: black;
+    position: absolute;
+    top: 50%;
+    margin-left: 38px;
+    left: 0;
+}
+
+h5:after {
+    content: "";
+    width: 140px;
+    height: 1px;
+    display: block;
+    background: black;
+    position: absolute;
+    top: 50%;
+    margin-right: 41px;
+    right: 0;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+
+}
+
+
+.mainSection {
+  background: white;
+  margin: 15px;
+
+}
+
+.spchart {
+  width: 250px;
+  margin: 10px;
+  position: absolute;
+  margin-left: 20px;
+}
+
+.menu {
+  text-decoration: none;
+  padding: 32px;
+  font-family: arial;
+  margin-left: 280px;
+}
+
+
+.menu a {
+  text-decoration: none;
+  font-family: arial;
+
+
+
+}
+
+.signAnchor a {
+  color: skyblue;
+  font-family: arial;
+}
+
+
+
+
+.subSection {
+  background: white;
+  width: 50%;
+}
+
+
+
+.loginSection {
+  width: 400px;
+  height: 520px;
+  background: white;
+  color: gray;
+  top: 50%;
+  left: 80%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  border-radius: 40px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.10);
+}
+
+.laptop {
+  margin-left: 120px;
+  top: 50px;
+  padding-top: 50px;
+  width: 550px;
+}
+
+.sign {
+  color: #0096FF;
+  font-size: 50px;
+  padding-top: 15px;
+  font-weight: 100;
+
+}
+
+
+.loginSection input {
+  border: none;
+  width: 80%;
+  height: 40px;
+  margin-bottom: 8px;
+  margin-left: 38px;
+  margin-right: 40px;
+  box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.1), 0 0 4px 0 rgba(0, 0, 0, 0.20);
+}
+
+.loginSection form p {
+  padding-left: 18px;
+  padding-bottom: 6px;
+  margin-left: 23px;
+}
+
+.loginSection input[type="button"] {
+  border: none;
+  border-radius: 10px;
+  background: #0096FF;
+  width: 80%;
+  height: 40px;
+  color: white;
+  margin-bottom: 20px;
+  margin-left: 38px;
+  font-size: 14px;
+  font-weight: 90;
+  letter-spacing: 2px;
+  cursor: pointer;
+
+}
+
+.sign-in{
+  border: none;
+  border-radius: 10px;
+  background: #0096FF;
+  width: 80%;
+  height: 40px;
+  color: white;
+  margin-bottom: 20px;
+  margin-left: 38px;
+  font-size: 14px;
+  font-weight: 90;
+  letter-spacing: 2px;
+}
+.loginSection input[type="submit"]:hover {
+  cursor: pointer;
+  background: skyblue;
+}
+
+
+.google {
+  border: none;
+  border-radius: 10px;
+  background: white;
+  width: 80%;
+  height: 40px;
+  color: gray;
+  margin-bottom: 21px;
+  margin-left: 38px;
+  margin-right: 30px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+  letter-spacing: 1px;
+}
+
+.fogetpw {
+  border: none;
+  border-radius: 5px;
+  background: white;
+  width: 50%;
+  height: 25px;
+  color: gray;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 30px;
+  font-size: 12px;
+  font-weight: 90;
+  letter-spacing: 2px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.20);
+
+}
+
+
+
+.loginSection p {
+  margin: 10px;
+  font-size: 12px;
+  padding: 0px;
+  font-weight: 100;
+  font-family: arial;
+  margin-left: 10px;
+  margin-right: 28px;
+  padding-left: 18px;
+}
+
+.signAnchor {
+    color: skyblue;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 15px;
+
+}
+
+.support {
+    color: gray;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 15px;
+}
+
+.knowladge {
+    color: gray;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+    font-size: 15px;
+
+}
+
+
+
+.menu a {
+    padding: 8px;
+
+
+
 }
 </style>

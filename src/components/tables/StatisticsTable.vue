@@ -112,6 +112,7 @@
 </template>
 
 <script>
+import { stubFalse } from "lodash";
 import { xBarRChartDataApi, xmrChartDataApi } from "../../api";
 import XBarRDataExcel from "./XBarRDataExcel.vue"
 
@@ -230,15 +231,53 @@ export default {
   },
 
   methods: {
-
+    //Ranga limit change issue #12
     upperLimitChanged(value) {
+      if(value!=='' || this.lowerSpecLimit!==''){
+        this.cp=false
+        this.pp=false
+        this.ppk=true
+        this.cpk=true
+      }
+      if(value!=='' && this.lowerSpecLimit!==''){
+        this.cp=true
+        this.pp=true
+        this.ppk=true
+        this.cpk=true
+      }
+      if(value==='' && this.lowerSpecLimit===''){
+        console.log("null both  ")
+        this.cp=false
+        this.pp=false
+        this.cpk=false
+        this.ppk=false
+      }
       this.$emit("specLimitChanged", {
         key: "upper",
         value: value
-      });
+      })
     },
 
     lowerLimitChanged(value) {
+      if(value!=='' || this.upperSpecLimit!==''){
+        this.cp=false
+        this.pp=false
+        this.ppk=true
+        this.cpk=true
+      }
+      if(value!=='' && this.upperSpecLimit!==''){
+        this.cp=true
+        this.pp=true
+        this.ppk=true
+        this.cpk=true
+      }
+      if(value==='' && this.upperSpecLimit===''){
+        console.log("null both  ")
+        this.cp=false
+        this.pp=false
+        this.cpk=false
+        this.ppk=false
+      }
       this.$emit("specLimitChanged", {
         key: "lower",
         value: value

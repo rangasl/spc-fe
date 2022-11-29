@@ -181,6 +181,29 @@ export default {
   watch: {
     dataList() {
       this.records = this.dataList.map((obj) => {
+        //ranga row value replace
+        if(obj.value===null){
+          obj.movingRange=null
+          obj.cumulativeAverage=null
+          obj.cumulativeAverageMR=null
+          obj.cumulativeStdDev=null
+          obj.xUCL=null
+          obj.xCL=null
+          obj.xLCL=null
+          obj.mrUCL=null
+          obj.mrCL=null
+          obj.cumulativeCPL=null
+          obj.cumulativeCPU=null
+          obj.cumulativeCPK=null
+          obj.averageCumulativeCPK=null
+          obj.sampleStdDev=null
+          obj.cumulativePPL=null
+          obj.cumulativePPK=null
+          obj.cumulativePPU=null
+          obj.averageCumulativePPK=null
+          obj.cp=null
+          obj.pp=null
+        }
         return {
           id: obj.id,
           lockLimit: false,
