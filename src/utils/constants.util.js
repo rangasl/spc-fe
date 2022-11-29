@@ -1,4 +1,6 @@
-const API_BASE_URL = "http://localhost:8090";
+// const API_BASE_URL = "http://localhost:8090";
+const API_BASE_URL = "https://spc-be.herokuapp.com";
+
 const XMR_CHART_DATA_PATH = "/xmr-data";
 const X_BAR_R_CHART_PATH = "/x-bar-r";
 const DASHBOARD_CHART_PATH = "/dashboard-charts";
