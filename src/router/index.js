@@ -9,6 +9,7 @@ import Login from "../pages/Login.vue";
 import Register from "../pages/Register.vue";
 import XmrChart from "../pages/XmrChart.vue";
 import XBarRChart from "../pages/XBarRChart.vue";
+import RegisterOtp from "../pages/Register-otp.vue"
 
 Vue.use(VueRouter);
 
@@ -59,6 +60,11 @@ const routes = [
     path: "/register",
     name: "Register",
     component: Register
+  },
+  {
+    path: "/register-otp",
+    name: "RegisterOtp",
+    component: RegisterOtp
   }
 ];
 

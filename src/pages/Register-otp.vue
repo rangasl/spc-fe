@@ -11,125 +11,104 @@
         <a class="knowladge" href="#">Knowledgebase</a>
     </div>
     <img class="laptop" src="../assets/computer.png">
+            <div class="loginSection">
     
-    <div class="loginSection">
-    
-    <h1 class="sign">REGISTER</h1>
+                <h1 class="sign">VERIFICATION</h1>
     
                 
-    <form>
+                <form>
     
-
-    <p style="padding-top: 12px;" align="left">User Name</p>
-    <input v-model="register.email" type="text" name="">
-    
-    <p align="left">Password</p>
-    <input  v-model="register.password" type="password" id="password" name=""><br>
-
-    <p align="left">First Name</p>
-    <input  v-model="register.firstName" type="text" name=""><br>
-    <p align="left">Last Name</p>
-    <input  v-model="register.lastName" type="text" name=""><br>
-    <p align="left">Company</p>
-    <input  v-model="register.company" type="text" name=""><br>
-
-    <input type="button" @click="signUp" name="" value="Sign Up"><br>
-    
-    <!-- <h5>OR</h5><br><br />
-    
-    <button class="google" @onclick="signIn">Sign Up</button> -->
+    <p style="padding-top: 40px;" align="left">Enter the verification code sent to your email address.</p>
+    <input v-model="login.email" type="text" name="">
     
     
-    <p>By sign up, you agree to our communications and usage terms.<br>
-        <br>
-        <!-- <button class="fogetpw">Forgot Password</button> -->
+    <input style="margin-top:40px;" type="button" @click="signIn" name="" value="Verify"><br>
     
-    </p>
+    
+    
     
     </form>
             </div>
     </div>
     
     </template>
-    
+      
     <script>
-import storageHelper from "../utils/storageHelper.util";
-import { userApi } from "../api";
-
-export default {
-  name: "Register",
-  data() {
-    return {
-      loading: false,
-      register: {
-        email: "",
-        password: "",
-        firstName: "",
-        lastName: "",
-        company: ""
+    
+    import storageHelper from "../utils/storageHelper.util";
+    import { userApi } from "../api";
+    
+    export default {
+      name: "register-otp",
+      data() {
+        return {
+          loading: false,
+          login: {
+            email: "",
+            password: ""
+          },
+          showSnackbar: false,
+          errorMsg: "",
+          position: "center",
+          duration: 4000
+        };
       },
-      showSnackbar: false,
-      errorMsg: "",
-      position: "center",
-      duration: 4000
-    };
-  },
-  created() {
-    const userObj = storageHelper.getUserObj();
-    if (userObj) this.$router.push("/dashboard");
-  },
-  mounted() {
-    document.getElementById("email").focus();
-    document.getElementById("company").addEventListener("keypress", (e) => {
-      if (e.key === "Enter") {
-        this.signUp();
-      }
-    });
-  },
-  methods: {
-    navigateToLogin() {
-      this.$router.push("/login");
-    },
-    navigateToOtp() {
-      this.$router.push("/Register-otp");
-    },
-    signUp() {
-      this.loading = true;
-
-      userApi
-        .register(
-          this.register.email,
-          this.register.password,
-          this.register.firstName,
-          this.register.lastName,
-          this.register.company
-        )
-        .then((res) => {
-          this.reset();
-          this.navigateToOtp();
-        //   this.navigateToLogin();
-        })
-        .catch((err) => {
-          console.error("register error :: ", err);
-          this.errorMsg = err.response.data || "something went wrong";
-          this.showSnackbar = true;
-          this.loading = false;
+      created() {
+        const userObj = storageHelper.getUserObj();
+        if (userObj) this.$router.push("/dashboard");
+      },
+      mounted() {
+        document.getElementById("email").focus();
+        document.getElementById("password").addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            this.signIn();
+          }
         });
-    },
-    reset() {
-      this.register.email = "";
-      this.register.password = "";
-      this.register.firstName = "";
-      this.register.lastName = "";
-      this.register.company = "";
-
-      this.showSnackbar = false;
-      this.errorMsg = "";
-      this.loading = false;
-    }
-  }
-};
-</script>
+      },
+      methods: {
+        navigateToRegister() {
+          this.$router.push("/register");
+        },
+        navigateToLogin() {
+          this.$router.push("/login");
+        },
+        navigateToHome() {
+          let redirectPath = storageHelper.getStoredData(
+            storageHelper.LOGIN_REDIRECT_PATH_KEY
+          );
+          if (redirectPath)
+            storageHelper.removeStoredData(storageHelper.LOGIN_REDIRECT_PATH_KEY);
+          else redirectPath = "/dashboard";
+    
+          this.$router.push(redirectPath);
+        },
+        reset() {
+          this.login.email = "";
+          this.login.password = "";
+          this.errorMsg = "";
+          this.showSnackbar = false;
+          this.loading = false;
+        },
+        signIn() {
+          this.loading = true;
+    
+          userApi.login(this.login.email, this.login.password, (res) => {
+            if (res && res.response && res.response.data) {
+              this.reset();
+              this.navigateToHome();
+            } else if (res && res.error) {
+              console.error("login error :: ", res.error);
+              this.errorMsg = res.error.response.data || "something went wrong";
+              this.showSnackbar = true;
+              this.loading = false;
+            }
+    
+            this.loading = false;
+          });
+        }
+      }
+    };
+    </script>
     
     <style scoped>
     .div1 {
@@ -206,7 +185,7 @@ export default {
     }
     
     .sign {
-        margin: 10px;
+        margin: 40px;
         padding: 0 0 2;
         text-align: center;
     }
@@ -302,9 +281,8 @@ export default {
     
     
     .loginSection {
-      margin-top: 50px;
       width: 400px;
-      height: 650px;
+      height: 520px;
       background: white;
       color: gray;
       top: 50%;
