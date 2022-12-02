@@ -226,17 +226,26 @@ function getCPU_ForXMR(cumulativeAverage, cumulativeStdDev, upperSpecLimit) {
   return (upperSpecLimit - cumulativeAverage) / (3 * cumulativeStdDev);
 }
 
+//Ranga
+let prevSdvalue=0
+let currSdvalue=null
+
 function calculateSampleStdDev(numbersArr) {
   // CALCULATE AVERAGE
   let total = 0;
-  for (let key in numbersArr)
-    total += numbersArr[key];
+
+  for (let key in numbersArr){
+    if(numbersArr[key]!=null)
+      total += numbersArr[key];
+  }
   let meanVal = total / numbersArr.length;
 
   // CALCULATE STANDARD DEVIATION
   let SDprep = 0;
-  for (let key in numbersArr)
-    SDprep += Math.pow((parseFloat(numbersArr[key]) - meanVal), 2);
+  for (let key in numbersArr){
+    if(numbersArr[key]!=null)
+      SDprep += Math.pow((parseFloat(numbersArr[key]) - meanVal), 2);
+  }
   let SDresult = Math.sqrt(SDprep / (numbersArr.length - 1));
 
   return SDresult;

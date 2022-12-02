@@ -232,21 +232,25 @@ const xmrChartDataModule = {
       let cumulativePPK = 0;
       let cp = 0;
       let pp = 0;
-
+      let currSampleStdDev=0;
+      let prevSampleStdDev=0;
       //Ranga Prev value call point
       list = list.map((obj, i) => {
         prev = curr;
         curr = obj.value;
+      
         if (obj.value===null){
           console.log("tracked")
           curr=prev;
           console.log(curr)
         }
+        // console.log(obj)      
         
         movingRange = util.getMovingRangeForXMR(prev, curr, i);
         valuesSum += obj.value;
         cumulativeAverage = util.getCumulativeAverage(valuesSum, i + 1);
         xCL = cumulativeAverage;
+
         if (typeof movingRange === "string") {
           mrSum = 0;
           cumulativeAverageMR = "";
@@ -318,6 +322,7 @@ const xmrChartDataModule = {
         obj.cp = cp;
         obj.pp = pp;
 
+       
         return obj;
       });
 

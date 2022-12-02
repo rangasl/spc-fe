@@ -181,7 +181,7 @@ export default {
   watch: {
     dataList() {
       this.records = this.dataList.map((obj) => {
-        //ranga row value replace
+        //Ranga ranga row value replace 
         if(obj.value===null){
           obj.movingRange=null
           obj.cumulativeAverage=null
