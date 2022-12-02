@@ -582,7 +582,7 @@ h5:after {
 .mainSection {
   background: white;
   margin: 15px;
-
+  
 }
 
 .spchart {
@@ -597,6 +597,7 @@ h5:after {
   padding: 32px;
   font-family: arial;
   margin-left: 280px;
+  display: none;
 }
 
 
