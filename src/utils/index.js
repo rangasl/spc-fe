@@ -230,6 +230,7 @@ function getCPU_ForXMR(cumulativeAverage, cumulativeStdDev, upperSpecLimit) {
 let prevSdvalue=0
 let currSdvalue=null
 
+//ranga standard deviation issue fixed
 function calculateSampleStdDev(numbersArr) {
   // CALCULATE AVERAGE
   let total = 0;

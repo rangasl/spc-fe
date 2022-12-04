@@ -112,6 +112,7 @@ export default {
         if (res && res.response && res.response.data) {
           this.reset();
           this.navigateToHome();
+          this.$router.push("/dashboard");
         } else if (res && res.error) {
           console.error("login error :: ", res.error);
           this.errorMsg = res.error.response.data || "something went wrong";
