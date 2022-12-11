@@ -110,7 +110,7 @@
           this.loading = true;
     
           userApi.verify(this.login.email, (res) => {
-            if (res && res.response && res.response.data) {
+            if (res.status==='200') {
               this.reset();
               this.navigateToHome();
             } else if (res && res.error) {
