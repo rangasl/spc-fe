@@ -427,10 +427,27 @@ export default {
           LCL: util.formatNumber(this.xChartData.lcl)
         };
       });
-
+      //Ranga this is the place where data pass to process capability ratios chart #1182
       this.processCapabilityRatiosData = this.dataList
         .map((obj) => {
-          return {
+          // obj.pp=1
+          // obj.cp=1
+          // console.log(obj.cumulativeCPK)
+          // console.log(obj.cp)
+          // console.log(obj.cumulativePPK)
+          // console.log(obj.pp)
+          if(obj.pp===""){
+            return {
+            key: obj.id + "",
+            label: obj.reference1,
+            note: obj.note,
+            Cpk: util.formatNumber(obj.cumulativeCPK),
+            // Cp: util.formatNumber(obj.cp),
+            Ppk: util.formatNumber(obj.cumulativePPK),
+            // Pp: util.formatNumber(obj.pp)
+          };
+          }else{
+            return {
             key: obj.id + "",
             label: obj.reference1,
             note: obj.note,
@@ -439,6 +456,8 @@ export default {
             Ppk: util.formatNumber(obj.cumulativePPK),
             Pp: util.formatNumber(obj.pp)
           };
+          }
+        
         })
         .filter(
           (obj) =>

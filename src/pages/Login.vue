@@ -21,20 +21,20 @@
             <form>
 
 <p style="padding-top: 12px;" align="left">User Name</p>
-<input v-model="login.email" type="text" name="">
+<input @keyup.enter="signIn" v-model="login.email" type="text" name="">
 
 <p align="left">Password</p>
-<input  v-model="login.password"
+<input @keyup.enter="signIn"  v-model="login.password"
             type="password"
             id="password" name=""><br><br>
 
 
-            <input type="button" @click="signIn" name="" value="Login"><br>
+            <input type="button" v-on:keyup.enter="signIn" @keyup.enter="signIn" @click="signIn" name="" value="Login"><br>
 
 
 <h5>OR</h5><br><br />
 
-<input type="button" @click="navigateToRegister" name="" value="Sign Up"><br>
+<input type="button"  @click="navigateToRegister" name="" value="Sign Up"><br>
 
 
 <p>By login, you agree to our communications and usage terms.<br>

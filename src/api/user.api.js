@@ -46,6 +46,12 @@ function register(email, password, firstName, lastName, company) {
   });
 }
 
+function verify(code) {
+  const URL = constants.API_BASE_URL + constants.USER_PATH + "/verify";
+  return axios.post(URL, {
+   code
+  });
+}
 function updateUser(userId, updatedUserObj) {
   const URL = constants.API_BASE_URL + constants.USER_PATH + "/" + userId;
   return axios.put(URL, updatedUserObj);
@@ -73,6 +79,7 @@ function changePassword(oldPassword, newPassword) {
 const userApi = Object.freeze({
   login,
   register,
+  verify,
   updateUser,
   deleteUser,
   getAllUsers_admin,
