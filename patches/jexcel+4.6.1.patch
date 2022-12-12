@@ -1,0 +1,105 @@
+diff --git a/node_modules/jexcel/dist/jexcel.js b/node_modules/jexcel/dist/jexcel.js
+index daa06ed..d022726 100644
+--- a/node_modules/jexcel/dist/jexcel.js
++++ b/node_modules/jexcel/dist/jexcel.js
+@@ -104,6 +104,8 @@ if (! jSuites && typeof(require) === 'function') {
+             // Allow deleting of all rows
+             allowDeletingAllRows:false,
+             // Allow column delete
++
++            //Ranga delete column edit
+             allowDeleteColumn:true,
+             // Allow rename column
+             allowRenameColumn:true,
+@@ -4407,6 +4409,9 @@ if (! jSuites && typeof(require) === 'function') {
+         obj.deleteColumn = function(columnNumber, numOfColumns) {
+             // Global Configuration
+             if (obj.options.allowDeleteColumn == true) {
++                //Ranga column edit feature
++                alert("You are not allowed to perform this action!");
++                return;
+                 if (obj.headers.length > 1) {
+                     // Delete column definitions
+                     if (columnNumber == undefined) {
+@@ -4418,6 +4423,7 @@ if (! jSuites && typeof(require) === 'function') {
+                             numOfColumns = 1;
+                         } else {
+                             // Remove selected
++                            console.log("deleted")
+                             columnNumber = parseInt(number[0]);
+                             numOfColumns = parseInt(number.length);
+                         }
+@@ -7090,7 +7096,9 @@ if (! jSuites && typeof(require) === 'function') {
+     /**
+      * Events
+      */
++    //Ranga key controls
+     jexcel.keyDownControls = function(e) {
++        // console.log(e)
+         if (jexcel.current) {
+             if (jexcel.current.edition) {
+                 if (e.which == 27) {
+@@ -7135,6 +7143,19 @@ if (! jSuites && typeof(require) === 'function') {
+                 }
+             }
+           
++
++            //Ranga edited and added the code move arrow keys
++            if (jexcel.current.edition && jexcel.current.selectedCell){
++                if (e.which == 40) {
++                    jexcel.current.closeEditor(jexcel.current.edition[0], true);
++                    e.preventDefault();
++                }
++                if (e.which == 38) {
++                    jexcel.current.closeEditor(jexcel.current.edition[0], true);
++                    e.preventDefault();
++                }
++               
++            }
+             if (! jexcel.current.edition && jexcel.current.selectedCell) {
+                 // Which key
+                 if (e.which == 37) {
+@@ -7165,15 +7186,15 @@ if (! jSuites && typeof(require) === 'function') {
+                     if (jexcel.current.options.editable == true) {
+                         if (jexcel.current.selectedRow) {
+                             if (jexcel.current.options.allowDeleteRow == true) {
+-                                if (confirm(jexcel.current.options.text.areYouSureToDeleteTheSelectedRows)) {
++                                // if (confirm(jexcel.current.options.text.areYouSureToDeleteTheSelectedRows)) {
+                                     jexcel.current.deleteRow();
+-                                }
++                                // }
+                             }
+                         } else if (jexcel.current.selectedHeader) {
+                             if (jexcel.current.options.allowDeleteColumn == true) {
+-                                if (confirm(jexcel.current.options.text.areYouSureToDeleteTheSelectedColumns)) {
++                                // if (confirm(jexcel.current.options.text.areYouSureToDeleteTheSelectedColumns)) {
+                                     jexcel.current.deleteColumn();
+-                                }
++                                // }
+                             }
+                         } else {
+                             // Change value
+diff --git a/node_modules/jexcel/src/js/jexcel.core.js b/node_modules/jexcel/src/js/jexcel.core.js
+index 7b7e62f..191e632 100644
+--- a/node_modules/jexcel/src/js/jexcel.core.js
++++ b/node_modules/jexcel/src/js/jexcel.core.js
+@@ -7130,15 +7130,15 @@ jexcel.keyDownControls = function(e) {
+                 if (jexcel.current.options.editable == true) {
+                     if (jexcel.current.selectedRow) {
+                         if (jexcel.current.options.allowDeleteRow == true) {
+-                            if (confirm(jexcel.current.options.text.areYouSureToDeleteTheSelectedRows)) {
++                            //if (confirm(jexcel.current.options.text.areYouSureToDeleteTheSelectedRows)) {
+                                 jexcel.current.deleteRow();
+-                            }
++                            //}
+                         }
+                     } else if (jexcel.current.selectedHeader) {
+                         if (jexcel.current.options.allowDeleteColumn == true) {
+-                            if (confirm(jexcel.current.options.text.areYouSureToDeleteTheSelectedColumns)) {
++                            // if (confirm(jexcel.current.options.text.areYouSureToDeleteTheSelectedColumns)) {
+                                 jexcel.current.deleteColumn();
+-                            }
++                            // }
+                         }
+                     } else {
+                         // Change value

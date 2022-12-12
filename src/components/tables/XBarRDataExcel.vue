@@ -57,6 +57,8 @@ export default {
       showEdit: false,
       selectedItem: null,
       spreadsheet: null,
+      oldSpreadsheet:null,
+      saved:0,
       records: [],
 
       options: {
@@ -854,14 +856,39 @@ export default {
     },
 
     notifyToSaveData() {
+      if(this.saved===1){
+      this.spreadsheet.history=JSON.parse(localStorage.getItem('history'))
+      this.spreadsheet.historyIndex=JSON.parse(localStorage.getItem('historyIndex'))
+      this.saved=0
+      }else{
+      }
+      localStorage.setItem('history',JSON.stringify(this.spreadsheet.history));
+      localStorage.setItem('historyIndex',JSON.stringify(this.spreadsheet.historyIndex));
+      console.log(this.spreadsheet.history)
       this.$emit("onDataChanged");
     },
 
     undo() {
+      if(this.saved===1){
+      this.spreadsheet.history=JSON.parse(localStorage.getItem('history'))
+      this.spreadsheet.historyIndex=JSON.parse(localStorage.getItem('historyIndex'))
+      this.saved=0
+      }else{
+      }
+      localStorage.setItem('history',JSON.stringify(this.spreadsheet.history));
+      localStorage.setItem('historyIndex',JSON.stringify(this.spreadsheet.historyIndex));
       if (this.spreadsheet && this.spreadsheet.undo) this.spreadsheet.undo();
-    },
+      },
 
     redo() {
+      if(this.saved===1){
+      this.spreadsheet.history=JSON.parse(localStorage.getItem('history'))
+      this.spreadsheet.historyIndex=JSON.parse(localStorage.getItem('historyIndex'))
+      this.saved=0
+      }else{
+      }
+      localStorage.setItem('history',JSON.stringify(this.spreadsheet.history));
+      localStorage.setItem('historyIndex',JSON.stringify(this.spreadsheet.historyIndex));
       if (this.spreadsheet && this.spreadsheet.redo) this.spreadsheet.redo();
     },
 

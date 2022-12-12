@@ -482,6 +482,7 @@ export default {
     },
 
     downloadData() {
+  
       if (
         this.$refs &&
         this.$refs.xmrExcelSheet &&
@@ -612,6 +613,9 @@ export default {
         this.$refs.xmrExcelSheet &&
         this.$refs.xmrExcelSheet[methodName]
       ) {
+        //Ranga save data point
+        //this is uncommented to test
+        //this calls handle change on tables-> XmrDataExcel.vue 
         this.$refs.xmrExcelSheet[methodName]();
       }
 

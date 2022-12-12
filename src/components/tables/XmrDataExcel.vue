@@ -18,11 +18,15 @@ export default {
 
   components: {
     // AddData  // FOR=>add-data
+    data:{
+      oldSpreadsheet:null
+    }
   },
 
   props: ["saveBtn", "headings"],
-
+  
   data() {
+    
     return {
       valueMapping: null,
       newRowAdded: false,
@@ -32,6 +36,7 @@ export default {
       // showEdit: false, // FOR=>add-data
       // selectedItem: null, // FOR=>add-data
       spreadsheet: null,
+      saved:0,
       records: [],
       downloadableColsIndexes: [2, 3, 4, 6],
 
@@ -235,7 +240,6 @@ export default {
       });
 
       this.options.data = JSON.parse(JSON.stringify(this.records));
-
       let blankRows = 40;
       if (this.records.length > 33) blankRows = 5;
       else blankRows = blankRows - this.records.length;
@@ -344,7 +348,12 @@ export default {
     },
 
     handleChange() {
+      this.saved=1;
+      console.log("handle change")
+      this.oldSpreadsheet=this.spreadsheet
+
       let currentData = this.spreadsheet.getJson();
+      console.log(currentData)
       if (!(currentData && currentData.length)) return;
 
       const hasNewRow = this.newRowAdded;
@@ -392,7 +401,7 @@ export default {
           dataIds: deletedRecordIds
         });
       }
-
+      //Ranga save data api transmission and chart refresh
       if (updatedRecords && updatedRecords.length) {
         this.updateDataItems({
           chartId: this.chartId,
@@ -409,6 +418,10 @@ export default {
           cb: this.handleResponse
         });
       }
+      console.log(this.oldSpreadsheet.history)
+      console.log(this.spreadsheet)
+      this.spreadsheet.history=this.oldSpreadsheet.history;
+
     },
 
     handleResponse(response) {
@@ -718,14 +731,39 @@ export default {
     },
 
     notifyToSaveData() {
+      if(this.saved===1){
+      this.spreadsheet.history=JSON.parse(localStorage.getItem('history'))
+      this.spreadsheet.historyIndex=JSON.parse(localStorage.getItem('historyIndex'))
+      this.saved=0
+      }else{
+      }
+      localStorage.setItem('history',JSON.stringify(this.spreadsheet.history));
+      localStorage.setItem('historyIndex',JSON.stringify(this.spreadsheet.historyIndex));
+      console.log(this.spreadsheet.history)
       this.$emit("onDataChanged");
     },
 
     undo() {
+      if(this.saved===1){
+      this.spreadsheet.history=JSON.parse(localStorage.getItem('history'))
+      this.spreadsheet.historyIndex=JSON.parse(localStorage.getItem('historyIndex'))
+      this.saved=0
+      }else{
+      }
+      localStorage.setItem('history',JSON.stringify(this.spreadsheet.history));
+      localStorage.setItem('historyIndex',JSON.stringify(this.spreadsheet.historyIndex));
       if (this.spreadsheet && this.spreadsheet.undo) this.spreadsheet.undo();
-    },
+      },
 
     redo() {
+      if(this.saved===1){
+      this.spreadsheet.history=JSON.parse(localStorage.getItem('history'))
+      this.spreadsheet.historyIndex=JSON.parse(localStorage.getItem('historyIndex'))
+      this.saved=0
+      }else{
+      }
+      localStorage.setItem('history',JSON.stringify(this.spreadsheet.history));
+      localStorage.setItem('historyIndex',JSON.stringify(this.spreadsheet.historyIndex));
       if (this.spreadsheet && this.spreadsheet.redo) this.spreadsheet.redo();
     },
 

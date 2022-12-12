@@ -109,6 +109,7 @@ export default {
       this.loading = true;
 
       userApi.login(this.login.email, this.login.password, (res) => {
+        console.log(res)
         if (res && res.response && res.response.data) {
           this.reset();
           this.navigateToHome();

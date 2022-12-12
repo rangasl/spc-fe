@@ -35,6 +35,15 @@ function login(email, password, callback = null) {
     });
 }
 
+function verify(code,callback=null) {
+  const URL = constants.API_BASE_URL + constants.USER_PATH + "/verify";
+  axios.post(URL, {code}).then(res=>{
+    callback(res)
+  }).catch((err)=>{
+    callback(res)
+  })
+}
+
 function register(email, password, firstName, lastName, company) {
   const URL = constants.API_BASE_URL + constants.USER_PATH + "/register";
   return axios.post(URL, {
@@ -46,12 +55,7 @@ function register(email, password, firstName, lastName, company) {
   });
 }
 
-function verify(code) {
-  const URL = constants.API_BASE_URL + constants.USER_PATH + "/verify";
-  return axios.post(URL, {
-   code
-  });
-}
+
 function updateUser(userId, updatedUserObj) {
   const URL = constants.API_BASE_URL + constants.USER_PATH + "/" + userId;
   return axios.put(URL, updatedUserObj);

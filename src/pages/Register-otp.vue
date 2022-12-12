@@ -94,6 +94,7 @@
     
           userApi.login(this.login.email, this.login.password, (res) => {
             if (res && res.response && res.response.data) {
+              console.log(res)
               this.reset();
               this.navigateToHome();
             } else if (res && res.error) {
@@ -106,20 +107,24 @@
             this.loading = false;
           });
         }, 
+
         Verify() {
           this.loading = true;
-    
+          console.log("g")
           userApi.verify(this.login.email, (res) => {
-            if (res.status==='200') {
+            console.log(res)
+            console.log("g")
+
+            console.log("00")
+            if (res.data.status===200) {
               this.reset();
-              this.navigateToHome();
-            } else if (res && res.error) {
+              this.$router.push("/login");
+            } else {
               console.error("login error :: ", res.error);
               this.errorMsg = res.error.response.data || "something went wrong";
               this.showSnackbar = true;
-              this.loading = false;
+              this.loading = false;   
             }
-    
             this.loading = false;
           });
         }
