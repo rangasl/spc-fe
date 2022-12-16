@@ -20,8 +20,8 @@
             
             <form>
 
-<p style="padding-top: 12px;" align="left">User Name</p>
-<input @keyup.enter="signIn" v-model="login.email" type="text" name="">
+<p style="padding-top: 12px;" align="left">Email Address</p>
+<input @change="validateEmail" for="email" type="email" @keyup.enter="signIn" @blur="validateEmail" v-model="login.email" name="">
 
 <p align="left">Password</p>
 <input @keyup.enter="signIn"  v-model="login.password"
@@ -30,7 +30,23 @@
 
 
             <input type="button" v-on:keyup.enter="signIn" @keyup.enter="signIn" @click="signIn" name="" value="Login"><br>
+      
+            <div v-if="initializing">
+        <div style="align-items:center;text-align:center">
+        </div>
+      </div>
+      
+            <div v-else-if="verified">
+              <div style="align-items:center;text-align:center">
+              <md-chip class="md-primary">Login Successfull!</md-chip>
+              </div>
+            </div>
 
+            <div v-else="verified">
+              <div style="align-items:center;text-align:center">
+              <md-chip class="md-accent" >Please enter valid email and password.</md-chip>
+              </div>
+            </div>
 
 <h5>OR</h5><br><br />
 
@@ -58,6 +74,8 @@ export default {
   name: "Login",
   data() {
     return {
+      initializing:true,
+      verified:false,
       loading: false,
       login: {
         email: "",
@@ -105,17 +123,27 @@ export default {
       this.showSnackbar = false;
       this.loading = false;
     },
+    validateEmail() {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.email)) {
+        this.msg['email'] = 'Please enter a valid email address';
+    } else {
+        this.msg['email'] = '';
+    }
+    },
     signIn() {
       this.loading = true;
 
       userApi.login(this.login.email, this.login.password, (res) => {
         console.log(res)
         if (res && res.response && res.response.data) {
+          this.initializing =false;
+          this.verified = true;
           this.reset();
           this.navigateToHome();
           this.$router.push("/dashboard");
         } else if (res && res.error) {
-          console.error("login error :: ", res.error);
+          this.initializing =false;
+          this.verified = false;
           this.errorMsg = res.error.response.data || "something went wrong";
           this.showSnackbar = true;
           this.loading = false;
@@ -348,6 +376,22 @@ h5:after {
   border: none;
   border-radius: 10px;
   background: #0096FF;
+  width: 80%;
+  height: 40px;
+  color: white;
+  margin-bottom: 20px;
+  margin-left: 38px;
+  font-size: 14px;
+  font-weight: 90;
+  letter-spacing: 2px;
+  cursor: pointer;
+
+}
+
+.loginSection input[type="button"]:hover {
+  border: none;
+  border-radius: 10px;
+  background: #1382d1;
   width: 80%;
   height: 40px;
   color: white;

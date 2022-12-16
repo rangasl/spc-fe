@@ -40,7 +40,7 @@ function verify(code,callback=null) {
   axios.post(URL, {code}).then(res=>{
     callback(res)
   }).catch((err)=>{
-    callback(res)
+    callback("Error")
   })
 }
 

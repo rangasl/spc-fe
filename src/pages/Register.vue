@@ -20,9 +20,17 @@
     <form>
     
 
-    <p style="padding-top: 12px;" align="left">User Name</p>
-    <input v-model="register.email" type="text" name="">
-    
+    <p style="padding-top: 12px;" align="left">Email Address</p>
+    <div v-if="initializing">
+    <input for="email" type="email" @keyup.enter="register" v-model="register.email" @change="validateEmail">
+    </div>
+    <div v-else-if="emailValidation">
+      <input for="email" type="email" @keyup.enter="register" v-model="register.email" @change="validateEmail">
+    </div>
+    <div v-else>
+      <input style="background:turquoise"  for="email" type="email" @keyup.enter="register" v-model="register.email" @change="validateEmail">
+    </div>
+
     <p align="left">Password</p>
     <input  v-model="register.password" type="password" id="password" name=""><br>
 
@@ -33,8 +41,23 @@
     <p align="left">Company</p>
     <input  v-model="register.company" type="text" name=""><br>
 
-    <input type="button" @click="signUp" name="" value="Sign Up"><br>
-    
+    <div v-if="initializing">
+      <input type="button" @click="signUp" name="" value="Sign Up"><br>
+        <div style="align-items:center;text-align:center">
+        </div>
+      </div>
+      
+            <div v-else-if="emailValidation">
+              <div style="align-items:center;text-align:center">
+                <input type="button" @click="signUp" name="" value="Sign Up"><br>
+              </div>
+            </div>
+
+            <div v-else="emailValidation">
+              <div style="align-items:center;text-align:center">
+              <md-chip class="md-accent" >Please enter valid email address.</md-chip>
+              </div>
+            </div>
     <!-- <h5>OR</h5><br><br />
     
     <button class="google" @onclick="signIn">Sign Up</button> -->
@@ -60,6 +83,8 @@ export default {
   name: "Register",
   data() {
     return {
+      initializing:true,
+      emailValidation:false,
       loading: false,
       register: {
         email: "",
@@ -96,6 +121,7 @@ export default {
     signUp() {
       this.loading = true;
 
+      if(this.emailValidation){
       userApi
         .register(
           this.register.email,
@@ -115,6 +141,20 @@ export default {
           this.showSnackbar = true;
           this.loading = false;
         });
+      }else{
+
+      }
+    },
+
+    validateEmail() {
+      console.log("vali")
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.register.email)) {
+        this.initializing = false;
+        this.emailValidation = true;
+    } else {
+        this.initializing=false;
+        this.emailValidation = false;
+    }
     },
     reset() {
       this.register.email = "";
@@ -364,6 +404,21 @@ export default {
     
     }
     
+    .loginSection input[type="button"]:hover {
+    border: none;
+    border-radius: 10px;
+    background: #1382d1;
+    width: 80%;
+    height: 40px;
+    color: white;
+    margin-bottom: 20px;
+    margin-left: 38px;
+    font-size: 14px;
+    font-weight: 90;
+    letter-spacing: 2px;
+    cursor: pointer;
+
+  }
     .sign-in{
       border: none;
       border-radius: 10px;

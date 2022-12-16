@@ -2,34 +2,48 @@
 <template>
     <div>
     
-     <div class="mainSection" align="left">
-    
-    <img class="spchart" src="../assets/spcchart.png">
-    </div>
-    <div class="menu" align="left">
-        <a class="signAnchor" @click="navigateToLogin">Sign In</a> | <a class="support" href="#">Contact Sopport</a> |
-        <a class="knowladge" href="#">Knowledgebase</a>
-    </div>
-    <img class="laptop" src="../assets/computer.png">
-            <div class="loginSection">
-    
-                <h1 class="sign">VERIFICATION</h1>
-    
-                
-                <form>
-    
-    <p style="padding-top: 40px;" align="left">Enter the verification code sent to your email address.</p>
-    <input v-model="login.email" type="text" name="">
-    
-    
-    <input style="margin-top:40px;" type="button" @click="Verify" name="" value="Verify"><br>
-    
-    
-    
-    
-    </form>
+      <div class="mainSection" align="left">
+      
+      <img class="spchart" src="../assets/spcchart.png">
+      </div>
+      <div class="menu" align="left">
+          <a class="signAnchor" @click="navigateToLogin">Sign In</a> | <a class="support" href="#">Contact Sopport</a> |
+          <a class="knowladge" href="#">Knowledgebase</a>
+      </div>
+      <img class="laptop" src="../assets/computer.png">
+      <div class="loginSection">
+      
+                  <h1 class="sign">VERIFICATION</h1>
+      
+                  
+                  <form>
+      
+      <p style="padding-top: 40px;" align="left">Enter the verification code sent to your email address.</p>
+      <input v-model="login.email" type="text" name="">
+      <input style="margin-top:40px;" type="button" @click="Verify" name="" value="Verify"><br>
+      
+      <div v-if="initializing">
+        <div style="align-items:center;text-align:center">
+        </div>
+      </div>
+      
+            <div v-else-if="verified">
+              <div style="align-items:center;text-align:center">
+              <md-chip class="md-primary">Verified Successfull</md-chip>
+              </div>
             </div>
+
+            <div v-else="verified">
+              <div style="align-items:center;text-align:center">
+              <md-chip class="md-accent" >Verification Code Invalid!</md-chip>
+              </div>
+            </div>
+
+      </form>
+      </div>
+
     </div>
+    
     
     </template>
       
@@ -38,10 +52,13 @@
     import storageHelper from "../utils/storageHelper.util";
     import { userApi } from "../api";
     
+    
     export default {
       name: "register-otp",
       data() {
         return {
+          initializing:true,
+          verified:true,
           loading: false,
           login: {
             email: "",
@@ -89,25 +106,7 @@
           this.showSnackbar = false;
           this.loading = false;
         },
-        signIn() {
-          this.loading = true;
-    
-          userApi.login(this.login.email, this.login.password, (res) => {
-            if (res && res.response && res.response.data) {
-              console.log(res)
-              this.reset();
-              this.navigateToHome();
-            } else if (res && res.error) {
-              console.error("login error :: ", res.error);
-              this.errorMsg = res.error.response.data || "something went wrong";
-              this.showSnackbar = true;
-              this.loading = false;
-            }
-    
-            this.loading = false;
-          });
-        }, 
-
+        
         Verify() {
           this.loading = true;
           console.log("g")
@@ -116,15 +115,23 @@
             console.log("g")
 
             console.log("00")
+            try{
             if (res.data.status===200) {
               this.reset();
+              this.initializing=false;
+              this.verified = true;              
               this.$router.push("/login");
             } else {
-              console.error("login error :: ", res.error);
               this.errorMsg = res.error.response.data || "something went wrong";
+              this.initializing=false;
               this.showSnackbar = true;
               this.loading = false;   
+              
             }
+          }catch(e){
+            this.initializing = false;
+            this.verified = false;              
+          }
             this.loading = false;
           });
         }
@@ -363,7 +370,22 @@
       cursor: pointer;
     
     }
-    
+
+    .loginSection input[type="button"]:hover {
+      border: none;
+      border-radius: 10px;
+      background: #1382d1;
+      width: 80%;
+      height: 40px;
+      color: white;
+      margin-bottom: 20px;
+      margin-left: 38px;
+      font-size: 14px;
+      font-weight: 90;
+      letter-spacing: 2px;
+      cursor: pointer;
+
+    }
     .sign-in{
       border: none;
       border-radius: 10px;
