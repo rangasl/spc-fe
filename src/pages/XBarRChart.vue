@@ -183,6 +183,7 @@ export default {
         fields: ["Rng UCL", "Rng CL", "Rng LCL", "Range"],
         lineShapes: ["dash", "line"]
       },
+      //ratio chart config
       ratioChartConfig: {
         fields: ["Cpk", "Cp", "Ppk", "Pp"]
       }
@@ -338,6 +339,7 @@ export default {
     },
 
     setStatisticsData() {
+      console.log(this.statisticsData)
       this.statisticsData = [
         {
           key: "Subgroup Size",
@@ -416,9 +418,18 @@ export default {
           "Avg LCL": util.formatNumber(this.xBarData.lcl)
         };
       });
-
+      //Ranga edit  subgroup chart process capability ratios issue
       this.formattedDataCPK = this.dataList
         .map((obj) => {
+          if(obj.cp===""){
+            return {
+            key: obj.id + "",
+            label: obj.reference1,
+            note: obj.note,
+            Cpk: util.formatNumber(obj.cumulativeCPK),
+            Ppk: util.formatNumber(obj.cumulativePPK),
+          };
+          }else{
           return {
             key: obj.id + "",
             label: obj.reference1,
@@ -428,6 +439,8 @@ export default {
             Ppk: util.formatNumber(obj.cumulativePPK),
             Pp: util.formatNumber(obj.pp)
           };
+        }
+
         })
         .filter(
           (obj) =>

@@ -46,6 +46,10 @@ export default {
   },
 
   data() {
+
+    // Ranga process capability ration called edit
+    // console.log("process capability ratio called")
+    // console.log(this.dataList)
     return {
       colors,
       scale: [
@@ -82,8 +86,11 @@ export default {
 
   methods: {
     getLabel(dataId) {
+      // console.log("data ID")
       if (this.dataList && this.dataList.length) {
+        // console.log("data list")
         const found = this.dataList.find((obj) => obj.id == dataId);
+        // console.log(found)
         if (found) return found.label;
         else return "";
       } else return "";
