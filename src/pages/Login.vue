@@ -290,7 +290,7 @@ h5:after {
 
 .spchart {
   width: 250px;
-  margin: 10px;
+  margin: 15px;
   position: absolute;
   margin-left: 20px;
 }
