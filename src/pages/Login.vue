@@ -8,7 +8,7 @@
 </div>
 <div class="menu" align="left">
     <a class="signAnchor" @click="navigateToLogin">Sign In</a> | <a class="support" href="#">Contact Sopport</a> |
-    <a class="knowladge" href="knowledgebase.spccharts.com">Knowledgebase</a>
+    <a class="knowladge" href="https://knowledgebase.spccharts.com">Knowledgebase</a>
 </div>
 
 <img class="laptop" src="../assets/computer.png">
