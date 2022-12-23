@@ -7,15 +7,15 @@
 <img class="spchart" src="../assets/spcchart.png">
 </div>
 <div class="menu" align="left">
-    <a class="signAnchor" @click="navigateToLogin">Sign In</a> | <a class="support" href="#">Contact Sopport</a> |
-    <a class="knowladge" href="https://knowledgebase.spccharts.com">Knowledgebase</a>
+    <a class="signAnchor" @click="navigateToLogin">Sign In |</a>  <a class="support" href="#">Contact Sopport</a> |
+    <a class="knowladge " href="https://knowledgebase.spccharts.com">Knowledgebase</a>
 </div>
 
 <img class="laptop" src="../assets/computer.png">
       
         <div class="loginSection">
 
-            <h1 class="sign">SIGN IN</h1>
+            <h1 class="sign" style="font-size: 28px;">SIGN IN</h1>
 
             
             <form>
@@ -47,11 +47,11 @@
               <md-chip class="md-accent" >Please enter valid email and password.</md-chip>
               </div>
             </div>
+<div class="login-divider">
+<h5>OR</h5><br>
+</div>
 
-<h5>OR</h5><br><br />
-
-<input type="button"  @click="navigateToRegister" name="" value="Sign Up"><br>
-
+<input type="button"  @click="navigateToRegister" name="" value="Register Now"><br>
 
 <p>By login, you agree to our communications and usage terms.<br>
     <br>
@@ -575,7 +575,7 @@ h5:after {
 
 .sign {
     margin: 10px;
-    padding: 0 0 2;
+    padding: 0 0;
     text-align: center;
 }
 
@@ -632,25 +632,32 @@ h5:after {
 }
 
 .spchart {
-  width: 250px;
+  width: 100px;
   margin: 10px;
   position: absolute;
   margin-left: 20px;
+  align-items: center;
+  
 }
 
-.menu {
-  text-decoration: none;
-  padding: 32px;
-  font-family: arial;
-  margin-left: 280px;
+.signAnchor{
   display: none;
 }
+.menu {
+  text-decoration: none;
+  padding-left: 30px;
+  font-family: arial;
+  margin-left: 0px;
+}
 
+.login-divider{
+  display: none;
+}
 
 .menu a {
   text-decoration: none;
   font-family: arial;
-
+  
 
 
 }
